@@ -2,7 +2,7 @@
 
 int recursion(int num){
     if(num!=0){
-        return (num%10+recur(num/10));
+        return (num%10+recursion(num/10));
     }
 }
 int nonrecur(int num){
