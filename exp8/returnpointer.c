@@ -1,5 +1,5 @@
 #include <stdio.h>
-int pointer(float* a,float* b,float* c);
+float* pointer(float* a,float* b,float* c);
 int main(){
     float A,B,C;
     printf("\nEnter three numbers:");
@@ -8,7 +8,7 @@ int main(){
     printf("\nLargest number is: %f",*max);
     return 0;
 }
-int pointer(float* a,float* b,float* c){
+float* pointer(float* a,float* b,float* c){
     if(*a>*b && *a>*c)
         return a;
     else if(*b>*a && *b>*c)
