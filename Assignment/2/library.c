@@ -7,15 +7,15 @@ int main() {
     scanf("%d", &n);
 
     if (n > 30) {
-        printf("\n membership has been cancelled!\n");
+        printf("\nMembership has been cancelled!\n");
         return 0;
     }
     else if (n <= 5)
         fine = n * 0.5;
     else if (n <= 10)
-        fine = 5 + (n - 5);
+        fine = 2.5 + (n - 5) * 1;
     else
-        fine = 10 + (n - 10) * 5;
-    printf("Fine: Rs. %.1f\n", fine);
+        fine = 7.5 + (n - 10) * 5; // Corrected this line
+    printf("Fine: Rs. %.2f\n", fine);
     return 0;
 }
