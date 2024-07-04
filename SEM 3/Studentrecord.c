@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX_STUDENTS 10
-
 struct name {
     char first[20];
     char sec[20];
@@ -60,126 +58,48 @@ float calculateCGPA(struct student *student) {
     return totalSGPA / 2.0;
 }
 
-void inputStudentData(struct student *student) {
+int main() {
+    struct student student1;
     printf("Enter student's first name: ");
-    scanf("%19s", student->fullname.first);
+    scanf("%19s", student1.fullname.first);
     printf("Enter student's second name: ");
-    scanf("%19s", student->fullname.sec);
+    scanf("%19s", student1.fullname.sec);
     printf("Enter student's last name: ");
-    scanf("%19s", student->fullname.last);
+    scanf("%19s", student1.fullname.last);
 
     printf("Enter student's roll number: ");
-    scanf("%d", &student->roll_no);
+    scanf("%d", &student1.roll_no);
 
     for (int sem = 0; sem < 2; sem++) {
         printf("Enter subjects and marks for semester %d\n", sem + 1);
         for (int i = 0; i < 4; i++) {
             printf("Enter subject %d code: ", i + 1);
-            scanf("%9s", student->sem[sem].subjects[i].subcode);
+            scanf("%9s", student1.sem[sem].subjects[i].subcode);
             printf("Enter subject %d marks: ", i + 1);
-            scanf("%d", &student->sem[sem].subjects[i].marks);
-            student->sem[sem].subjects[i].grade[0] = calculateGrade(student->sem[sem].subjects[i].marks);
-            student->sem[sem].subjects[i].grade[1] = '\0';
+            scanf("%d", &student1.sem[sem].subjects[i].marks);
+            student1.sem[sem].subjects[i].grade[0] = calculateGrade(student1.sem[sem].subjects[i].marks);
+            student1.sem[sem].subjects[i].grade[1] = '\0';
         }
-        student->sem[sem].SGPA = calculateSGPA(&student->sem[sem]);
+        student1.sem[sem].SGPA = calculateSGPA(&student1.sem[sem]);
     }
 
-    student->CGPA = calculateCGPA(student);
-}
+    student1.CGPA = calculateCGPA(&student1);
 
-void displayStudentData(struct student *student) {
     printf("\nStudent Information:\n");
-    printf("Name: %s %s %s\n", student->fullname.first, student->fullname.sec, student->fullname.last);
-    printf("Roll No: %d\n", student->roll_no);
+    printf("Name: %s %s %s\n", student1.fullname.first, student1.fullname.sec, student1.fullname.last);
+    printf("Roll No: %d\n", student1.roll_no);
 
     for (int sem = 0; sem < 2; sem++) {
         printf("\nSemester %d:\n", sem + 1);
         printf("%-15s%-10s%-10s\n", "Subject Code", "Marks", "Grade");
         printf("---------------------------------\n");
         for (int i = 0; i < 4; i++) {
-            printf("%-15s%-10d%-10s\n", student->sem[sem].subjects[i].subcode, student->sem[sem].subjects[i].marks, student->sem[sem].subjects[i].grade);
+            printf("%-15s%-10d%-10s\n", student1.sem[sem].subjects[i].subcode, student1.sem[sem].subjects[i].marks, student1.sem[sem].subjects[i].grade);
         }
-        printf("SGPA: %.2f\n", student->sem[sem].SGPA);
+        printf("SGPA: %.2f\n", student1.sem[sem].SGPA);
     }
 
-    printf("\nCGPA: %.2f\n", student->CGPA);
-}
-
-int findStudentIndex(struct student students[], int num_students, int roll_no) {
-    for (int i = 0; i < num_students; i++) {
-        if (students[i].roll_no == roll_no) {
-            return i;
-        }
-    }
-    return -1;
-}
-
-void updateStudentData(struct student *student) {
-    printf("Updating student data for roll no %d\n", student->roll_no);
-    inputStudentData(student);
-}
-
-void displayMenu() {
-    printf("\nMenu:\n");
-    printf("1. Add student data\n");
-    printf("2. Display all students\n");
-    printf("3. Search for a student by roll number\n");
-    printf("4. Update student data\n");
-    printf("5. Exit\n");
-    printf("Enter your choice: ");
-}
-
-int main() {
-    struct student students[MAX_STUDENTS];
-    int num_students = 0;
-    int choice;
-
-    while (1) {
-        displayMenu();
-        scanf("%d", &choice);
-
-        switch (choice) {
-            case 1:
-                if (num_students < MAX_STUDENTS) {
-                    inputStudentData(&students[num_students]);
-                    num_students++;
-                } else {
-                    printf("Maximum number of students reached.\n");
-                }
-                break;
-            case 2:
-                for (int i = 0; i < num_students; i++) {
-                    displayStudentData(&students[i]);
-                }
-                break;
-            case 3:
-                printf("Enter roll number to search: ");
-                int roll_no;
-                scanf("%d", &roll_no);
-                int index = findStudentIndex(students, num_students, roll_no);
-                if (index != -1) {
-                    displayStudentData(&students[index]);
-                } else {
-                    printf("Student with roll number %d not found.\n", roll_no);
-                }
-                break;
-            case 4:
-                printf("Enter roll number to update: ");
-                scanf("%d", &roll_no);
-                index = findStudentIndex(students, num_students, roll_no);
-                if (index != -1) {
-                    updateStudentData(&students[index]);
-                } else {
-                    printf("Student with roll number %d not found.\n", roll_no);
-                }
-                break;
-            case 5:
-                printf("Exiting...\n");
-                return 0;
-            default:
-                printf("Invalid choice. Please try again.\n");
-        }
-    }
+    printf("\nCGPA: %.2f\n", student1.CGPA);
 
     return 0;
 }
