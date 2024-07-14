@@ -13,8 +13,10 @@ struct node *unionl(struct node *, struct node *, struct node *);
 struct node *intersection(struct node *, struct node *, struct node *);
 struct node *match(struct node *, int data);
 struct node *diff(struct node *, struct node *, struct node *);
-void display(struct node *start);
+struct node *reverse(struct node *);
+struct node *del(struct node *,int);
 struct node *sort(struct node *);
+void display(struct node *start);
 
 int main() {
     struct node *start1 = NULL;
@@ -35,7 +37,9 @@ int main() {
         printf("6. Intersection of List 1 and List 2\n");
         printf("7. Difference L1 - L2\n");
         printf("8. Difference L2 - L1\n");
-        printf("9. Exit\n");
+        printf("9. Reverse\n");
+        printf("10.Delete Node\n");
+        printf("11. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -89,6 +93,38 @@ int main() {
                 display(start6);
                 break;
             case 9:
+                printf("\n1.List 1\n2.List 2\nEnter:");
+                scanf("%d",&choice);
+                switch(choice){
+                case 1:
+                    start1=reverse(start1);
+                    break;
+                case 2:
+                    start2=reverse(start2);
+                    break;
+                default:
+                    printf("\nInvalid Choice\n");
+                }
+                break;
+            case 10:
+                printf("\n1.List 1\n2.List 2\nEnter:");
+                scanf("%d",&choice);
+                switch(choice){
+                case 1:
+                    printf("\nEnter Node to be deleted:");
+                    scanf("%d",&num);
+                    start1=del(start1,num);
+                    break;
+                case 2:
+                    printf("\nEnter Node to be deleted:");
+                    scanf("%d",&num);
+                    start2=del(start2,num);
+                    break;
+                default:
+                    printf("\nInvalid Choice\n");
+                }
+                break;
+            case 11:
                 exit(0);
             default:
                 printf("\nInvalid choice. Please try again.\n");
@@ -209,7 +245,44 @@ void display(struct node *start) {
     }
     printf("\n");
 }
-
+struct node *reverse(struct node *start){
+    struct node *prev,*ptr,*next;
+    prev=NULL;
+    ptr=start;
+    while(ptr!=NULL){
+        next=ptr->link;
+        ptr->link=prev;
+        prev=ptr;
+        ptr=next;
+    }
+    start=prev;
+    return prev;
+}
+struct node *del(struct node *start,int info){
+    struct node *temp,*p;
+    if(start==NULL){
+        printf("\nList is Empty\n");
+        return start;
+    }
+    if(start->data==info){
+        temp=start;
+        start=start->link;
+        free(temp);
+        return start;
+    }
+    p=start;
+    while(p->link!=NULL){
+        if(p->link->data==info){
+            temp=p->link;
+            p->link=temp->link;
+            free(temp);
+            return start;
+        }
+        p=p->link;
+    }
+    printf("\nNode Not found\n");
+    return start;
+}
 struct node *sort(struct node *start) {
     struct node *i, *j;
     int temp;
