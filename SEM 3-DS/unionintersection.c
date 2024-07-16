@@ -14,7 +14,7 @@ struct node *intersection(struct node *, struct node *, struct node *);
 struct node *match(struct node *, int data);
 struct node *diff(struct node *, struct node *, struct node *);
 struct node *reverse(struct node *);
-struct node *del(struct node *,int);
+struct node *del(struct node *, int);
 struct node *sort(struct node *);
 void display(struct node *start);
 
@@ -27,7 +27,7 @@ int main() {
     struct node *start6 = NULL;
     int choice, num, r1, r2;
 
-    while(1) {
+    while (1) {
         printf("\nMenu:\n");
         printf("1. Create List 1\n");
         printf("2. Create List 2\n");
@@ -38,23 +38,25 @@ int main() {
         printf("7. Difference L1 - L2\n");
         printf("8. Difference L2 - L1\n");
         printf("9. Reverse\n");
-        printf("10.Delete Node\n");
+        printf("10. Delete Node\n");
         printf("11. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
-        switch(choice) {
+        switch (choice) {
             case 1:
                 printf("\nEnter number of nodes for List 1: ");
                 scanf("%d", &r1);
                 start1 = NULL;
                 start1 = createlist(start1, r1);
+                start1 = sort(start1);  // Sort the list after creation
                 break;
             case 2:
                 printf("\nEnter number of nodes for List 2: ");
                 scanf("%d", &r2);
                 start2 = NULL;
                 start2 = createlist(start2, r2);
+                start2 = sort(start2);  // Sort the list after creation
                 break;
             case 3:
                 printf("\nList 1: ");
@@ -67,61 +69,58 @@ int main() {
             case 5:
                 start3 = NULL;
                 start3 = unionl(start1, start2, start3);
-                start3 = sort(start3);
+                start3=sort(start3);
                 printf("\nUnion List: ");
                 display(start3);
                 break;
             case 6:
                 start4 = NULL;
                 start4 = intersection(start1, start2, start4);
-                start4 = sort(start4);
                 printf("\nIntersection List: ");
                 display(start4);
                 break;
             case 7:
                 start5 = NULL;
                 start5 = diff(start1, start2, start5);
-                start5 = sort(start5);
                 printf("\nL1 - L2 : ");
                 display(start5);
                 break;
             case 8:
                 start6 = NULL;
                 start6 = diff(start2, start1, start6);
-                start6 = sort(start6);
                 printf("\nL2 - L1 : ");
                 display(start6);
                 break;
             case 9:
                 printf("\n1.List 1\n2.List 2\nEnter:");
-                scanf("%d",&choice);
-                switch(choice){
-                case 1:
-                    start1=reverse(start1);
-                    break;
-                case 2:
-                    start2=reverse(start2);
-                    break;
-                default:
-                    printf("\nInvalid Choice\n");
+                scanf("%d", &choice);
+                switch (choice) {
+                    case 1:
+                        start1 = reverse(start1);
+                        break;
+                    case 2:
+                        start2 = reverse(start2);
+                        break;
+                    default:
+                        printf("\nInvalid Choice\n");
                 }
                 break;
             case 10:
                 printf("\n1.List 1\n2.List 2\nEnter:");
-                scanf("%d",&choice);
-                switch(choice){
-                case 1:
-                    printf("\nEnter Node to be deleted:");
-                    scanf("%d",&num);
-                    start1=del(start1,num);
-                    break;
-                case 2:
-                    printf("\nEnter Node to be deleted:");
-                    scanf("%d",&num);
-                    start2=del(start2,num);
-                    break;
-                default:
-                    printf("\nInvalid Choice\n");
+                scanf("%d", &choice);
+                switch (choice) {
+                    case 1:
+                        printf("\nEnter Node to be deleted:");
+                        scanf("%d", &num);
+                        start1 = del(start1, num);
+                        break;
+                    case 2:
+                        printf("\nEnter Node to be deleted:");
+                        scanf("%d", &num);
+                        start2 = del(start2, num);
+                        break;
+                    default:
+                        printf("\nInvalid Choice\n");
                 }
                 break;
             case 11:
@@ -174,7 +173,7 @@ struct node *addatend(struct node *start, int info) {
 struct node *unionl(struct node *start1, struct node *start2, struct node *start3) {
     struct node *temp = start1;
     while (temp != NULL) {
-        if(start3 == NULL){
+        if (start3 == NULL) {
             start3 = addatbeg(start3, temp->data);
         } else {
             start3 = addatend(start3, temp->data);
@@ -196,7 +195,7 @@ struct node *intersection(struct node *start1, struct node *start2, struct node 
     struct node *temp = start2;
     while (temp != NULL) {
         if (match(start1, temp->data)) {
-            if(start4 == NULL){
+            if (start4 == NULL) {
                 start4 = addatbeg(start4, temp->data);
             } else {
                 start4 = addatend(start4, temp->data);
@@ -211,11 +210,11 @@ struct node *diff(struct node *start1, struct node *start2, struct node *start5)
     struct node *temp = start1;
     while (temp != NULL) {
         if (!match(start2, temp->data)) {
-            if(start5 == NULL){
+            if (start5 == NULL) {
                 start5 = addatbeg(start5, temp->data);
             } else {
                 start5 = addatend(start5, temp->data);
-        }
+            }
         }
         temp = temp->link;
     }
@@ -245,44 +244,47 @@ void display(struct node *start) {
     }
     printf("\n");
 }
-struct node *reverse(struct node *start){
-    struct node *prev,*ptr,*next;
-    prev=NULL;
-    ptr=start;
-    while(ptr!=NULL){
-        next=ptr->link;
-        ptr->link=prev;
-        prev=ptr;
-        ptr=next;
+
+struct node *reverse(struct node *start) {
+    struct node *prev, *ptr, *next;
+    prev = NULL;
+    ptr = start;
+    while (ptr != NULL) {
+        next = ptr->link;
+        ptr->link = prev;
+        prev = ptr;
+        ptr = next;
     }
-    start=prev;
-    return prev;
+    start = prev;
+    return start;
 }
-struct node *del(struct node *start,int info){
-    struct node *temp,*p;
-    if(start==NULL){
+
+struct node *del(struct node *start, int info) {
+    struct node *temp, *p;
+    if (start == NULL) {
         printf("\nList is Empty\n");
         return start;
     }
-    if(start->data==info){
-        temp=start;
-        start=start->link;
+    if (start->data == info) {
+        temp = start;
+        start = start->link;
         free(temp);
         return start;
     }
-    p=start;
-    while(p->link!=NULL){
-        if(p->link->data==info){
-            temp=p->link;
-            p->link=temp->link;
+    p = start;
+    while (p->link != NULL) {
+        if (p->link->data == info) {
+            temp = p->link;
+            p->link = temp->link;
             free(temp);
             return start;
         }
-        p=p->link;
+        p = p->link;
     }
     printf("\nNode Not found\n");
     return start;
 }
+
 struct node *sort(struct node *start) {
     struct node *i, *j;
     int temp;
