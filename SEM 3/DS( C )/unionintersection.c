@@ -281,7 +281,7 @@ struct node *del(struct node *start, int info) {
         }
         p = p->link;
     }
-    printf("\nNode Not found\n");
+    printf("\nElement Not found\n");
     return start;
 }
 
