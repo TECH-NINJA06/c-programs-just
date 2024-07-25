@@ -13,7 +13,7 @@ struct node *unionl(struct node *, struct node *, struct node *);
 struct node *intersection(struct node *, struct node *, struct node *);
 struct node *match(struct node *, int data);
 struct node *diff(struct node *, struct node *, struct node *);
-struct node *reverse(struct node *);
+//struct node *reverse(struct node *);
 struct node *del(struct node *, int);
 struct node *sort(struct node *);
 void display(struct node *start);
@@ -37,7 +37,7 @@ int main() {
         printf("6. Intersection of List 1 and List 2\n");
         printf("7. Difference L1 - L2\n");
         printf("8. Difference L2 - L1\n");
-        printf("9. Reverse\n");
+//        printf("9. Reverse\n");
         printf("10. Delete Node\n");
         printf("11. Exit\n");
         printf("Enter your choice: ");
@@ -91,7 +91,7 @@ int main() {
                 printf("\nL2 - L1 : ");
                 display(start6);
                 break;
-            case 9:
+/*            case 9:
                 printf("\n1.List 1\n2.List 2\nEnter:");
                 scanf("%d", &choice);
                 switch (choice) {
@@ -104,7 +104,7 @@ int main() {
                     default:
                         printf("\nInvalid Choice\n");
                 }
-                break;
+                break;*/
             case 10:
                 printf("\n1.List 1\n2.List 2\nEnter:");
                 scanf("%d", &choice);
@@ -244,7 +244,7 @@ void display(struct node *start) {
     }
     printf("\n");
 }
-
+/*
 struct node *reverse(struct node *start) {
     struct node *prev, *ptr, *next;
     prev = NULL;
@@ -258,7 +258,7 @@ struct node *reverse(struct node *start) {
     start = prev;
     return start;
 }
-
+*/
 struct node *del(struct node *start, int info) {
     struct node *temp, *p;
     if (start == NULL) {
