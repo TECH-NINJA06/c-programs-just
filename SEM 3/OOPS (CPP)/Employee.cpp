@@ -74,7 +74,7 @@ int main() {
         cin >> choice;
         switch (choice) {
             case 1:
-                cout << left<< setw(10) << "empno"<< setw(20) << "name"<< setw(15) << "current salary"<< setw(15) << "Old salary"<< setw(15) << "Status" << endl;
+                cout << left<< setw(10) << "employee-no"<< setw(20) << "name"<< setw(15) << "current salary"<< setw(15) << "Old salary"<< setw(15) << "Status" << endl;
                 for (int i = 0; i < n; i++) {
                     e[i].display();
                 }
