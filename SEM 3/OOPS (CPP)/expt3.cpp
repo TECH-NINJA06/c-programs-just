@@ -1,20 +1,19 @@
 #include <iostream>
 using namespace std;
 
-class A {
+class temp {
     int x, y;
-
 public:
-    A(int a, int b) {
+    temp(int &a, int &b) {
         x = a;
         y = b;
     }
-    A(A &a) {
-        x = a.x;
-        y = a.y;
+    temp(temp &t) {
+        x = t.y;
+        y = t.x;
     }
-    ~A() {
-        cout << "Destructor called" << endl;
+    ~temp() {
+        cout << "\nDestructor called" << endl;
     }
     void display() {
         cout << "x = " << x << " y = " << y << endl;
@@ -22,9 +21,14 @@ public:
 };
 
 int main() {
-    A a(10, 20);
-    A b(a);
-    a.display();
-    b.display();
+    int x,y;
+    cout<<"Enter two number:";
+    cin>>x>>y;
+    temp m(x,y);
+    cout<<"\nBefore Swap\n\t";
+    m.display();
+    temp n(m);
+    cout<<"\nAfter Swap\n\t";
+    n.display();
     return 0;
 }
