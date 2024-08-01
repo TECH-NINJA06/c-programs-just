@@ -22,7 +22,7 @@ public:
 
 int main() {
     int x,y;
-    cout<<"Enter two number:";
+    cout<<"Enter two numbers:";
     cin>>x>>y;
     temp m(x,y);
     cout<<"\nBefore Swap\n\t";
