@@ -110,7 +110,7 @@ void display_S() {
         return;
     }
     while (p != NULL) {
-        printf("|%c|%p|  ->  ", p->s, (void*)p->next);
+        printf("|%c|%03d|  ->  ", p->s, (int)p->next%1000);
         p = p->next;
     }
     printf("NULL\n");
@@ -123,7 +123,7 @@ void display_Q() {
         return;
     }
     while (temp != NULL) {
-        printf("|%c|%p|  ->  ", temp->s, (void*)temp->next);
+        printf("|%c|%03d|  ->  ", temp->s,(int)temp->next%1000);
         temp = temp->next;
     }
     printf("NULL\n");

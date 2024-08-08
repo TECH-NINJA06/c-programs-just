@@ -13,35 +13,7 @@ void display();
 int count();
 
 void main(){
-    int c,item;
-    while(1){
-        printf("\n1.Insert\n2.Delete\n3.Display\n4.Exit\nEnter:");
-        scanf("%d",&c);
-        switch(c){
-        case 1:
-            printf("\nEnter info:");
-            scanf("%d",&item);
-            insert(item);
-            break;
-        case 2:
-            del_queue();
-            break;
-        case 3:
-            display();
-            break;
-        case 4:
-            int x=count();
-            if(x!=0)
-                printf("\nTOTAL:%d nodes",x);
-            else
-                printf("\nEMPTY");
-        case 5:
-            eit(0);
-        default:
-            printf("\nInvalid Option\n");
-        }
-    }
-/*    insert(10);
+    insert(10);
     display();
     insert(64);
     display();
@@ -68,7 +40,7 @@ void main(){
     del_queue();
     display();
     insert(45);
-    display();*/
+    display();
 }
 void insert(int item){
     if(isfull()){
@@ -109,16 +81,23 @@ int peek(){
     }
     return queue_arr[front];
 }
-void display(){
-    printf("Queue: ");
-    if(isempty()){
+void display() {
+    printf("Queue:\n");
+    if (isempty()) {
         printf("Empty\n");
-        return;
     }
-    for(int i=front;i<=rear;i++){
-        printf("%d  ",queue_arr[i]);
+    printf("Front=%d \tRear=%d\n",front,rear);
+    for (int i = 0; i <= rear; i++) {
+        printf("[%-2d]", i);
     }
     printf("\n");
+    for (int i = 0; i <= rear; i++) {
+        if(i>=front)
+        printf("|%-3d", queue_arr[i]);
+        else
+        printf("|%-3s"," ");
+    }
+    printf("|\n");
 }
 int count(){
     if(isempty())

@@ -62,10 +62,7 @@ struct node *createlist(struct node *start, int n) {
     if (n == 0) {
         return start;
     }
-    printf("Enter data for node 1: ");
-    scanf("%d", &info);
-    start = addatbeg(start, info);
-    for (i = 1; i < n; i++) {
+    for (i = 0; i < n; i++) {
         printf("Enter data for node %d: ", i + 1);
         scanf("%d", &info);
         start = addatend(start, info);
@@ -119,7 +116,7 @@ struct node *del(struct node *start, int info) {
             if (temp->prev != NULL) {
                 temp->prev->next = temp->next;
             } else {
-                start = temp->next; // Removing the head node
+                start = temp->next;
             }
             if (temp->next != NULL) {
                 temp->next->prev = temp->prev;
@@ -139,11 +136,12 @@ void display(struct node *start) {
         printf("Empty List\n");
         return;
     }
+    printf("<-------------------------------------------------------\n");
     while (temp != NULL) {
-        printf("%d ", temp->data);
+        printf("|%03d|%d|%03d|\t",(int)temp->prev%1000,temp->data,(int)temp->next%1000);
         temp = temp->next;
     }
-    printf("\n");
+    printf("\n------------------------------------------------------>\n");
 }
 
 struct node *swapAdjacent(struct node *start) {
@@ -155,7 +153,7 @@ struct node *swapAdjacent(struct node *start) {
         if (first->prev != NULL) {
             first->prev->next = second;
         } else {
-            start = second; // Update head if swapping the first two nodes
+            start = second;
         }
 
         second->prev = first->prev;
