@@ -132,11 +132,7 @@ void display_Q() {
 int palindrome() {
     struct Node *t1 = top, *t2 = front;
     while (t1 != NULL && t2 != NULL) {
-        if (isalpha(t1->s) && isalpha(t2->s)) {
-            if (tolower(t1->s) != tolower(t2->s)) {
-                return 0;
-            }
-        } else if (t1->s != t2->s) {
+        if(t1->s != t2->s) {
             return 0;
         }
         t1 = t1->next;

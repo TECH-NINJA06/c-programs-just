@@ -20,12 +20,12 @@ int IsEmpty() {
     return top == -1;
 }
 
-void Push(char savepoint) {
+void Push(char s) {
     if (IsFull()) {
         printf("Stack Overflow\n");
         return;
     }
-    stack[++top] = savepoint;
+    stack[++top] = s;
 }
 
 char Pop() {

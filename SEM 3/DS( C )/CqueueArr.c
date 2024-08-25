@@ -1,84 +1,72 @@
 #include <stdio.h>
-
 #define MAX 5
-
 int queue[MAX];
 int front = -1;
 int rear = -1;
-
-int isFull() {
-    return (front == (rear + 1) % MAX);
-}
-
-int isEmpty() {
-    return (front == -1);
-}
-
-void enqueue(int value) {
+int isFull() { return (front == (rear + 1) % MAX); }
+int isEmpty(){return (front == -1);}
+void Insert(int value) {
     if (isFull()) {
-        printf("Queue is full\n");
+        printf("Queue is Full\n");
         return;
     }
-    if (isEmpty()) {
+    if (isEmpty())
         front = rear = 0;
-    } else {
+    else
         rear = (rear + 1) % MAX;
-    }
     queue[rear] = value;
-    printf("%d enqueued to queue\n", value);
+    printf("%d enqueued\n", value);
 }
 
-void dequeue() {
+void Del() {
     if (isEmpty()) {
-        printf("Queue is empty\n");
+        printf("Empty Queue\n");
         return;
     }
     int value = queue[front];
-    if (front == rear) {
+    if (front == rear)
         front = rear = -1;
-    } else {
+    else
         front = (front + 1) % MAX;
-    }
-    printf("%d dequeued from queue\n", value);
+    printf("%d dequeued\n", value);
 }
-
 void display() {
     if (isEmpty()) {
-        printf("Queue is empty\n");
+        printf("Empty Queue\n");
         return;
     }
-    int i = front;
-    printf("Queue: ");
-    while (1) {
-        printf("%d ", queue[i]);
-        if (i == rear) break;
-        i = (i + 1) % MAX;
+
+    // Display the front and rear indices
+    printf("Front = %d   Rear = %d\n", front, rear);
+
+    // Display the indices of the queue elements
+    for (int i = 0; i < MAX; i++) {
+        printf("[%-3d]", i);
+    }
+    printf("\n");
+
+    // Display the upper boundary of the array slots
+    for (int i = 0; i < MAX; i++) {
+        printf(" %-3s ", "___");
+    }
+    printf("\n");
+
+    // Display the queue elements or empty slots
+    for (int i = 0; i < MAX; i++) {
+        if ((front <= rear && i >= front && i <= rear) || (front > rear && (i >= front || i <= rear)))
+            printf("| %-3d", queue[i]);
+        else
+            printf("| %-3s", " ");
+    }
+    printf("|\n");
+
+    // Display the lower boundary of the array slots
+    for (int i = 0; i < MAX; i++) {
+        printf(" %-3s ", "---");
     }
     printf("\n");
 }
-
 int main() {
-    int c,item;
-    while(1){
-        printf("\n1.Insert\n2.Delete\n3.Display\n4.Exit\nEnter:");
-        scanf("%d",&c);
-        switch(c){
-        case 1:
-            printf("\nEnter info:");
-            scanf("%d",&item);
-            enqueue(item);
-            break;
-        case 2:
-            dequeue();
-            break;
-        case 3:
-            display();
-            break;
-        case 4:
-            exit(0);
-        default:
-            printf("\nInvalid Option\n");
-        }
-    }
+    Del();display();Insert(13);display();Insert(86);display();Insert(109);display();Insert(68);display();Del();display();Del();display();Insert(100);display();Insert(11);display();Insert(89);display();Del();display();Del();display();Del();display();
     return 0;
 }

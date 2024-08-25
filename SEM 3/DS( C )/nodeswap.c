@@ -17,42 +17,22 @@ void display(struct node *);
 struct node *swapAdjacent(struct node *);
 
 int main() {
-    int choice, n, data;
+    int n;
+    struct Node* start = NULL;
 
-    while (1) {
-        printf("\nMenu:\n");
-        printf("1. Create Doubly Linked List\n");
-        printf("2. Display Doubly Linked List\n");
-        printf("3. Swap Adjacent Nodes\n");
-        printf("4. Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
+    // Step 1: Create Doubly Linked List
+    printf("Enter the number of nodes: ");
+    scanf("%d", &n);
+    start = createlist(start, n);
 
-        switch (choice) {
-            case 1:
-                printf("Enter the number of nodes: ");
-                scanf("%d", &n);
-                start = createlist(start, n);
-                break;
+    // Step 2: Display Doubly Linked List
+    printf("Doubly Linked List:\n");
+    display(start);
 
-            case 2:
-                display(start);
-                break;
-
-            case 3:
-                start = swapAdjacent(start);
-                printf("Swapped adjacent nodes:\n");
-                display(start);
-                break;
-
-            case 4:
-                exit(0);
-                break;
-
-            default:
-                printf("Invalid choice. Please try again.\n");
-        }
-    }
+    // Step 3: Swap Adjacent Nodes
+    start = swapAdjacent(start);
+    printf("After swapping adjacent nodes:\n");
+    display(start);
 
     return 0;
 }
@@ -62,8 +42,12 @@ struct node *createlist(struct node *start, int n) {
     if (n == 0) {
         return start;
     }
-    for (i = 0; i < n; i++) {
-        printf("Enter data for node %d: ", i + 1);
+    printf("Enter data:");
+    scanf("%d", &info);
+    start = addatbeg(start, info);
+
+    for (i = 1; i < n; i++) {
+        printf("Enter data:");
         scanf("%d", &info);
         start = addatend(start, info);
     }
@@ -136,12 +120,12 @@ void display(struct node *start) {
         printf("Empty List\n");
         return;
     }
-    printf("<-------------------------------------------------------\n");
+    printf("<-----------------------------------------------------------------\n");
     while (temp != NULL) {
         printf("|%03d|%d|%03d|\t",(int)temp->prev%1000,temp->data,(int)temp->next%1000);
         temp = temp->next;
     }
-    printf("\n------------------------------------------------------>\n");
+    printf("\n---------------------------------------------------------------->\n");
 }
 
 struct node *swapAdjacent(struct node *start) {
