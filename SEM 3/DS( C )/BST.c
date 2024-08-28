@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 struct Node {
     int info;
@@ -19,6 +20,10 @@ struct Node *insert(struct Node *root, int ikey) {
         root->left = insert(root->left, ikey);
     } else if (ikey > root->info) {
         root->right = insert(root->right, ikey);
+    }
+    else{
+        printf("\nDuplication Not allowed\n");
+        return root;
     }
     return root;
 }
@@ -60,7 +65,14 @@ struct Node *Del(struct Node *root, int dkey) {
     }
     return root;
 }
-
+int max(int a, int b) {
+    return (a > b) ? a : b;
+}
+int height(struct Node *node) {
+    if (node == NULL)
+        return 0;
+    return max(height(node->left), height(node->right)) + 1;
+}
 void inorder(struct Node *root) {
     if (root != NULL) {
         inorder(root->left);
@@ -97,7 +109,8 @@ int main() {
         printf("4. Inorder Traversal\n");
         printf("5. Preorder Traversal\n");
         printf("6. Postorder Traversal\n");
-        printf("7. Exit\n");
+        printf("7. Height\n");
+        printf("8. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -142,6 +155,9 @@ int main() {
                 printf("\n");
                 break;
             case 7:
+                printf("\nHeight:%d\n",height(root));
+                break;
+            case 8:
                 exit(0);
             default:
                 printf("Invalid choice\n");

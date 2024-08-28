@@ -5,6 +5,7 @@
         "iosfwd": "cpp",
         "iostream": "cpp",
         "initializer_list": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "iomanip": "cpp"
     }
 }
