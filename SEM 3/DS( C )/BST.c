@@ -144,6 +144,7 @@ int main() {
                 inorder(root);
                 printf("\n");
                 break;
+
             case 5:
                 printf("Preorder traversal:\n");
                 preorder(root);

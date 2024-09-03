@@ -10,11 +10,11 @@ public:
         surname = s;
     }
     void display() {
-        cout << "Grandfather class, Surname: " << surname << endl;
+        cout << "Grandfather, Surname: " << surname << endl;
     }
 };
 
-class Father : public Grandfather {
+class Parent : public Grandfather {
 protected:
     string occupation;
 public:
@@ -22,11 +22,11 @@ public:
         occupation = o;
     }
     void display() {
-        cout << "Father class, Occupation: " << occupation << ", Surname: " << surname << endl;
+        cout << "Parent, Occupation: " << occupation << ", Surname: " << surname << endl;
     }
 };
 
-class Child : public Father {
+class Child : public Parent {
 protected:
     int age;
 public:
@@ -34,7 +34,7 @@ public:
         age = a;
     }
     void display() {
-        cout << "Child class, Age: " << age << ", Surname: " << surname << ", Occupation: " << occupation << endl;
+        cout << "Child, Age: " << age << ", Surname: " << surname << ", Parent's Occupation: " << occupation << endl;
     }
 };
 
@@ -57,7 +57,7 @@ int main() {
     cout << "\nDisplaying information from Child class:" << endl;
     c.display();
     cout << "\nDisplaying information from Father class:" << endl;
-    c.Father::display();
+    c.Parent::display();
     cout << "\nDisplaying information from Grandfather class:" << endl;
     c.Grandfather::display();
 
