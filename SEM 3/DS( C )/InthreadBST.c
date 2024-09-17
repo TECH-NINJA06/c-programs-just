@@ -24,6 +24,10 @@ void insert(int data) {
 
     while (1) {
         parent = temp;
+        if(data == temp->data){
+            printf("Element already exists\n");
+            return;
+        }
         if (data < temp->data) {
             if (temp->lthread == 1) {
                 newNode->left = temp->left;
@@ -156,22 +160,18 @@ struct Node *case_a(struct Node *root, struct Node *parent, struct Node *temp) {
 struct Node *case_b(struct Node *root, struct Node *parent, struct Node *temp) {
     struct Node *child = (temp->lthread == 1) ? temp->right : temp->left;
 
-    if (parent == NULL) {
+    if (parent == NULL)
         root = child;
-    } else if (temp == parent->left) {
+    else if (temp == parent->left)
         parent->left = child;
-    } else {
+    else 
         parent->right = child;
-    }
-
     struct Node *inorderSuccessor = inorder_successor(temp);
     struct Node *inorderPredecessor = inorder_predecessor(temp);
-
-    if (temp->lthread == 1) {
+    if (temp->lthread == 1)
         inorderPredecessor->right = child;
-    } else {
+    else
         inorderSuccessor->left = child;
-    }
     free(temp);
     return root;
 }
@@ -197,17 +197,21 @@ struct Node *deleteNode(struct Node *root, int data) {
         if (data == temp->data) {
             found = 1;
             break;
-        } else if (data < temp->data) {
+        }
+        else if (data < temp->data) {
             if (temp->lthread == 1) {
                 break;
-            } else {
+            }
+            else {
                 parent = temp;
                 temp = temp->left;
             }
-        } else {
+        } 
+        else {
             if (temp->rthread == 1) {
                 break;
-            } else {
+            }
+            else {
                 parent = temp;
                 temp = temp->right;
             }
@@ -216,17 +220,15 @@ struct Node *deleteNode(struct Node *root, int data) {
 
     if (!found) {
         printf("Element not found\n");
-        return root;
     }
-
-    if (temp->lthread == 0 && temp->rthread == 0) {
-        root = case_c(root, parent, temp);
-    } else if ((temp->lthread == 1 && temp->rthread == 0) || (temp->lthread == 0 && temp->rthread == 1)) {
-        root = case_b(root, parent, temp);
-    } else {
-        root = case_a(root, parent, temp);
+    else{
+        if (temp->lthread == 0 && temp->rthread == 0)
+            root = case_c(root, parent, temp);
+        else if ((temp->lthread == 1 && temp->rthread == 0) || (temp->lthread == 0 && temp->rthread == 1))
+            root = case_b(root, parent, temp);
+        else 
+            root = case_a(root, parent, temp);
     }
-
     return root;
 }
 
