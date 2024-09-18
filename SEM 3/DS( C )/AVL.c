@@ -49,9 +49,11 @@ struct node *insert_left_check(struct node *pptr, int *ptaller){
     switch(pptr->balance){
         case 0:
             pptr->balance=1;
+            printf("\nP %d : case L_A",pptr->info);
             break;
         case -1:
             pptr->balance=0;
+            printf("\nP %d : case L_B",pptr->info);
             *ptaller=false;
             break;
         case 1:
@@ -67,6 +69,7 @@ struct node *insert_left_balance(struct node *pptr){
     if(aptr->balance ==1){
         pptr->balance=0;
         aptr->balance=0;
+        printf("\nP %d : case L_C1",pptr->info);
         pptr=rotate_right(pptr);
     }
     else{
@@ -75,14 +78,17 @@ struct node *insert_left_balance(struct node *pptr){
             case 1:
                 pptr->balance=-1;
                 aptr->balance=0;
+                printf("\nP %d : case L_C2a",pptr->info);
                 break;
             case 0:
                 pptr->balance=0;
                 aptr->balance=0;
+                printf("\nP %d : case L_C2b",pptr->info);
                 break;
             case -1:
                 pptr->balance=0;
                 aptr->balance=1;
+                printf("\nP %d : case L_C2c",pptr->info);
                 break;
         }
         bptr->balance=0;
@@ -95,10 +101,12 @@ struct node *insert_right_check(struct node *pptr, int *ptaller){
     switch(pptr->balance){
         case 0:
             pptr->balance=-1;
+            printf("\nP %d : case R_A",pptr->info);
             break;
         case 1:
             pptr->balance=0;
             *ptaller=false;
+            printf("\nP %d : case R_B",pptr->info);
             break;
         case -1:
             pptr=insert_right_balance(pptr);
@@ -114,6 +122,7 @@ struct node *insert_right_balance(struct node *pptr){
         pptr->balance=0;
         aptr->balance=0;
         pptr=rotate_left(pptr);
+        printf("\nP %d : case R_C1",pptr->info);
     }
     else{
         bptr=aptr->lchild;
@@ -121,14 +130,17 @@ struct node *insert_right_balance(struct node *pptr){
             case 1:
                 pptr->balance=0;
                 aptr->balance=-1;
+                printf("\nP %d : case R_C2a",pptr->info);
                 break;
             case 0:
                 pptr->balance=0;
                 aptr->balance=0;
+                printf("\nP %d : case R_C2b",pptr->info);
                 break;
             case -1:
                 pptr->balance=1;
                 aptr->balance=0;
+                printf("\nP %d : case R_C2c",pptr->info);
                 break;
         }
         bptr->balance=0;
