@@ -245,7 +245,7 @@ struct node *del_left_balance(struct node *pptr, int *pshorter) {
             pptr = rotate_right(pptr);
             break;
 
-        case -1: /* Case L-1: Double rotation needed */
+        case -1: /* Case L-1: Double rotation */
             bptr = aptr->rchild;
             switch (bptr->balance) {
                 case 0:

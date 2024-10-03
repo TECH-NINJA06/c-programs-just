@@ -6,6 +6,7 @@
         "iostream": "cpp",
         "initializer_list": "cpp",
         "utility": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "ostream": "cpp"
     }
 }

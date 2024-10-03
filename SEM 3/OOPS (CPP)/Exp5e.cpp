@@ -79,9 +79,13 @@ int main() {
             index = i;
         }
     }
-
+    cout.setf(ios::left,ios::adjustfield);
+    cout<<setw(20)<<"EmpID"<< setw(10) << "EmpName" << setw(15) << "Designation" << setw(10) << "Basic Pay" << setw(10) << "HRA" << setw(10) << "DA" << setw(10) << "PF" << setw(12) << "Net Salary" << endl;
+    for(int i=0;i<n;i++){
+        e[i].display();
+    }
     cout << "\nEmployee with the highest net salary:\n";
-    cout<<setw(20)<<"Employee-ID"<< setw(10) << "Name" << setw(15) << "Designation" << setw(10) << "Basic Pay" << setw(10) << "HRA" << setw(10) << "DA" << setw(10) << "PF" << setw(12) << "Net Salary" << endl;
+    cout<<setw(20)<<"EmpID"<< setw(10) << "EmpName" << setw(15) << "Designation" << setw(10) << "Basic Pay" << setw(10) << "HRA" << setw(10) << "DA" << setw(10) << "PF" << setw(12) << "Net Salary" << endl;
     e[index].display();
 
     return 0;

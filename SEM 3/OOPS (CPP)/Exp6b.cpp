@@ -1,6 +1,5 @@
 #include <iostream>
 using namespace std;
-
 class Shape{
     protected:
     float r,l,b;
@@ -10,25 +9,22 @@ class Shape{
         cout<<"Shape Function"<<endl;
     }
 };
-
 class Circle:public Shape{
     public:
     void area(){
         cout<<"Enter the radius of the circle: ";
         cin>>r;
-        cout<<"Area of the circle is: "<<3.14*r*r<<endl;
+        cout<<"Area of the circle is: "<<3.14*r*r<<" sq. units"<<endl;
     }
 };
-
 class Rectangle:public Shape{
     public:
     void area(){
         cout<<"Enter the length and breadth of the rectangle: ";
         cin>>l>>b;
-        cout<<"Area of the rectangle is: "<<l*b<<endl;
+        cout<<"Area of the rectangle is: "<<l*b<<" sq. units"<<endl;
     }
 };
-
 int main(){
     Shape *s;
     Circle c;
