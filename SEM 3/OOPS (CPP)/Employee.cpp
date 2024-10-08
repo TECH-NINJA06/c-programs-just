@@ -28,7 +28,7 @@ void employee::accept() {
 }
 
 void employee::display() {
-    cout << setw(10) << empno<< setw(20) << name<< setw(15) << updated_sal<< setw(15) << sal << setw(15) << status << endl;
+    cout << setw(15) << empno<< setw(20) << name<< setw(15) << updated_sal<< setw(15) << sal << setw(15) << status << endl;
 }
 
 void employee::change(int n, employee e[]) {
@@ -61,8 +61,7 @@ int main() {
     int n, choice;
     cout << "\nEnter Number Of Employees: ";
     cin >> n;
-    employee* e = new employee[n];
-
+    employee *e=new employee[n];
     cout << "\nEnter Employee Data \n";
     for (int i = 0; i < n; i++) {
         cout << "Employee " << i + 1;
@@ -74,7 +73,7 @@ int main() {
         cin >> choice;
         switch (choice) {
             case 1:
-                cout << left<< setw(10) << "employee-no"<< setw(20) << "name"<< setw(15) << "current salary"<< setw(15) << "Old salary"<< setw(15) << "Status" << endl;
+                cout << setw(15) << "employee-no"<< setw(20) << "name"<< setw(15) << "current salary"<< setw(15) << "Old salary"<< setw(15) << "Status" << endl;
                 for (int i = 0; i < n; i++) {
                     e[i].display();
                 }

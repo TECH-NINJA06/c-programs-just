@@ -1,198 +1,213 @@
+#include <ctype.h>
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
-#define MAX 30
+#define MAX 50
 
-char postfix[MAX], infix[MAX];
+char infix[MAX];
+char postfix[MAX];
 char stack[MAX];
+long int lstack[MAX];
+float fstack[MAX];
 int top = -1;
+int uchars[256] = {0};
 
-int isfull();
-int isempty();
-void push(char);
-char pop();
-void in_to_post();
-int instack_pri(char);
-int symbol_pri(char);
-int space(char);
-long int evaluate();
-
-int main() {
-    printf("\nEnter infix expression: ");
-    gets(infix);
-    in_to_post();
-    printf("\nInfix to Postfix Expression: %s\n", postfix);
-
-    long int result = evaluate();
-    printf("Result of Postfix Expression: %ld\n", result);
-    return 0;
+int IsFull() {
+    return top == MAX - 1;
 }
 
-int isfull() {
-    if(top==MAX-1)
-        return 1;
-    return 0;
+int IsEmpty() {
+    return top == -1;
 }
 
-int space(char s) {
-    if(s == ' ' || s == '\t')
-        return 1;
-    return 0;
-}
-
-int isempty() {
-    if(top==-1)
-        return 1;
-    return 0;
-}
-
-void push(char s) {
-    if (isfull()) {
+void Push(char s) {
+    if (IsFull()) {
         printf("Stack Overflow\n");
         return;
     }
     stack[++top] = s;
 }
 
-char pop() {
-    if (isempty()) {
+char Pop() {
+    if (IsEmpty()) {
         printf("Stack Underflow\n");
-        return 0;
+        return '\0';
     }
-    char item = stack[top--];
-    return item;
+    return stack[top--];
 }
 
-int instack_pri(char s) {
-    switch (s) {
-        case '+':
-        case '-':
-            return 1;
-        case '*':
-        case '/':
-        case '%':
-            return 2;
+char Peek() {
+    if (IsEmpty()) {
+        printf("Stack Underflow\n");
+        return '\0';
+    }
+    return stack[top];
+}
+
+void PreDisplay(char symbol, char postfix[], int k) {
+    printf("%-10c", symbol);
+    for (int i = 0; i <= top; i++)
+        printf("%c", stack[i]);
+    printf("\t\t");
+    for (int i = 0; i < k; i++)
+        printf("%c", postfix[i]);
+    printf("\n");
+}
+
+int WhiteSpace(char symbol) {
+    return symbol == ' ' || symbol == '\t';
+}
+
+int InstackPriority(char ch) {
+    switch (ch) {
         case '^':
             return 3;
+        case '*': case '/': case '%':
+            return 2;
+        case '+': case '-':
+            return 1;
         case '(':
             return 0;
         default:
-            return 0;
+            return -1;
     }
 }
 
-int symbol_pri(char s) {
-    switch (s) {
-        case '+':
-        case '-':
-            return 1;
-        case '*':
-        case '/':
-        case '%':
-            return 2;
+int SymbolPriority(char ch) {
+    switch (ch) {
         case '^':
             return 4;
+        case '*': case '/': case '%':
+            return 2;
+        case '+': case '-':
+            return 1;
+        case '(':
+            return 5;
         default:
             return 0;
     }
 }
 
-void in_to_post() {
-    char s, a;
-    int pos = 0;
-
-    printf("\n%-8s%-15s%-15s\n", "SYMBOL", "STACK", "POSTFIX");
+void InfixToPostfix() {
+    int k = 0;
+    char symbol, next;
+    printf("Symbol\tStack\t\tPostfix\n");
     for (int i = 0; i < strlen(infix); i++) {
-        s = infix[i];
-        if (!space(s)) {
-            switch (s) {
+        symbol = infix[i];
+        if (!WhiteSpace(symbol)) {
+            switch (symbol) {
                 case '(':
-                    push(s);
+                    Push(symbol);
                     break;
-
                 case ')':
-                    while ((a = pop()) != '(')
-                        postfix[pos++] = a;
+                    while ((next = Pop()) != '(')
+                        postfix[k++] = next;
                     break;
-
-                case '+':
-                case '-':
-                case '*':
-                case '/':
-                case '%':
-                case '^':
-                    while (!isempty() && instack_pri(stack[top]) >= symbol_pri(s))
-                        postfix[pos++] = pop();
-                    push(s);
+                case '+': case '-': case '*': case '/': case '%': case '^':
+                    while (top != -1 && InstackPriority(Peek()) >= SymbolPriority(symbol))
+                        postfix[k++] = Pop();
+                    Push(symbol);
                     break;
-
                 default:
-                    postfix[pos++] = s;
+                    postfix[k++] = symbol;
             }
-            printf("%-8c", infix[i]);
-            for (int j = 0; j <= top; j++) {
-                printf("%c", stack[j]);
-            }
-            printf("%-15s", "");
-            printf("%-15s\n", postfix);
+            PreDisplay(symbol, postfix, k);
         }
     }
-    while (!isempty()) {
-        postfix[pos++] = pop();
-        printf("%-8s", "");
-        for (int j = 0; j <= top; j++) {
-            printf("%c ", stack[j]);
-        }
-        printf("%-15s", "");
-        printf("%-15s\n", postfix);
+    while (top != -1) {
+        postfix[k++] = Pop();
+        PreDisplay(' ', postfix, k);
     }
-    postfix[pos] = '\0';
+    postfix[k] = '\0';
 }
 
-long int evaluate() {
-    int i = 0;
-    long int op1, op2, result;
-    char symbol;
+void DisplayEvaluation(char ch, int top) {
+    printf("%-10c", ch);
+    for (int i = top; i >= 0; i--)
+        printf("%ld,", lstack[i]);
+    if (top >= 2)
+        printf("\t\t");
+    else
+        printf("\t\t\t");
+    for (int i = top; i >=0; i--)
+        printf("%.2f,", fstack[i]);
+    printf("\n");
+}
 
-    printf("\n%-8s%-15s%-15s\n", "SYMBOL", "STACK", "POSTFIX");
-    while ((symbol = postfix[i++]) != '\0') {
-        if (isdigit(symbol)) {
-            push(symbol - '0');
+void Collecting() {
+    char ch;
+    int val;
+    for (int i = 0; i < strlen(postfix); i++) {
+        ch = postfix[i];
+        if (isalpha(ch) && !uchars[(unsigned char)ch]) {
+            printf("Enter the value of %c: ", ch);
+            scanf("%d", &val);
+            uchars[(unsigned char)ch] = val;
+        }
+    }
+    for (int i = 0; i < strlen(postfix); i++) {
+        ch = postfix[i];
+        if (isalpha(ch)) {
+            lstack[i] = uchars[(unsigned char)ch];
+            fstack[i] = (float)uchars[(unsigned char)ch];
+        }
+    }
+}
+
+void Evaluation() {
+    top = -1;
+    char ch;
+    int a, b;
+    float fa, fb;
+    printf("Symbol\tLong Int Stack\t\tFloat Stack\n");
+    for (int i = 0; i < strlen(postfix); i++) {
+        ch = postfix[i];
+        if (isalpha(ch)) {
+            lstack[++top] = lstack[i];
+            fstack[top] = fstack[i];
         } else {
-            op2 = pop();
-            op1 = pop();
-            switch (symbol) {
+            b = lstack[top--];
+            a = lstack[top--];
+            fa = fstack[top + 1];
+            fb = fstack[top + 2];
+            switch (ch) {
                 case '+':
-                    result = op1 + op2;
+                    lstack[++top] = a + b;
+                    fstack[top] = fa + fb;
                     break;
                 case '-':
-                    result = op1 - op2;
+                    lstack[++top] = a - b;
+                    fstack[top] = fa - fb;
                     break;
                 case '*':
-                    result = op1 * op2;
+                    lstack[++top] = a * b;
+                    fstack[top] = fa * fb;
                     break;
                 case '/':
-                    result = op1 / op2;
+                    lstack[++top] = a / b;
+                    fstack[top] = fa / fb;
                     break;
                 case '%':
-                    result = op1 % op2;
+                    lstack[++top] = a % b;
+                    fstack[top] = (float)(a % b);
                     break;
                 case '^':
-                    result = 1;
-                    for (int j = 0; j < op2; j++) {
-                        result *= op1;
-                    }
+                    lstack[++top] = (int)pow(a, b);
+                    fstack[top] = (float)pow(fa, fb);
                     break;
             }
-            push(result);
         }
-
-        printf("%-8c", symbol);
-        for (int j = 0; j <= top; j++) {
-            printf("%ld ", stack[j]);
-        }
-        printf("%-15s", "");
-        printf("%-15s\n", postfix);
+        DisplayEvaluation(ch, top);
     }
-    return pop();
+    printf("\nFinal Result: Long int: %ld, Float: %.2f\n", lstack[top], fstack[top]);
+}
+
+int main() {
+    printf("Enter Infix Expression: ");
+    scanf("%s", infix);
+    InfixToPostfix();
+    printf("\nThe Postfix Expression is: %s\n", postfix);
+    Collecting();
+    Evaluation();
+    return 0;
 }

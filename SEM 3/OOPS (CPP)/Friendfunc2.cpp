@@ -24,11 +24,11 @@ class square{
     friend void compare(rectangle &,square &);
 };
 void compare(rectangle &p,square &q){
-    cout<<endl<<"Area of square:"<<p.a<<" sq units"<<endl<<"Area of rectangle:"<<q.a<<" sq units";
+    cout<<endl<<"Area of Rectangle:"<<p.a<<" sq units"<<endl<<"Area of Square:"<<q.a<<" sq units";
     if(p.a>q.a)
-        cout<<"\nArea of square is larger than rectangle"<<setprecision(2)<<p.a-q.a<<" sq. units";
+        cout<<"\nArea of square is larger than rectangle by "<<setprecision(2)<<p.a-q.a<<" sq. units";
     else if(p.a<q.a)
-        cout<<"\nArea of rectangle is larger than square by "<<setprecision(2)<< *q.a-p.a<<" sq. units";
+        cout<<"\nArea of rectangle is larger than square by "<<setprecision(2)<< q.a-p.a<<" sq. units";
     else
         cout<<"\nArea of rectangle is equal to Area of square";
 }

@@ -1,9 +1,7 @@
 #include <stdio.h>
 #define MAX 4
-
 int queue_arr[MAX];
 int front=-1,rear=-1,flag=0;
-
 void insert(int);
 void del_queue();
 int isempty();
@@ -13,71 +11,17 @@ void display();
 int count();
 
 void main(){
-    int c,item;
-    while(1){
-        printf("\n1.Insert\n2.Delete\n3.Display\n4.Exit\nEnter:");
-        scanf("%d",&c);
-        switch(c){
-        case 1:
-            printf("\nEnter info:");
-            scanf("%d",&item);
-            insert(item);
-            break;
-        case 2:
-            del_queue();
-            break;
-        case 3:
-            display();
-            break;
-        case 4:
-            int x=count();
-            if(x!=0)
-                printf("\nTOTAL:%d nodes",x);
-            else
-                printf("\nEMPTY");
-        case 5:
-            eit(0);
-        default:
-            printf("\nInvalid Option\n");
-        }
-    }
-/*    insert(10);
-    display();
-    insert(64);
-    display();
-    insert(105);
-    display();
-    insert(100);
-    display();
-    insert(89);
-    display();
-    insert(100);
-    display();
-    del_queue();
-    display();
-    del_queue();
-    display();
-    del_queue();
-    display();
-    del_queue();
-    display();
-    insert(27);
-    display();
-    del_queue();
-    display();
-    del_queue();
-    display();
-    insert(45);
-    display();*/
+    insert(10);display();insert(64);display();insert(105);display();insert(100);display();insert(89);display();
+    insert(100);display();del_queue();display();del_queue();display();del_queue();display();del_queue();display();
+    insert(27);display();del_queue();display();del_queue();display();insert(45);display();
 }
 void insert(int item){
     if(isfull()){
         printf("\nQueue Overflow\n");
         return;
     }
-    if(front==-1){
+    if(front==-1)
         front=0;
-    }
     rear+=1;
     queue_arr[rear]=item;
     printf("\n%d inserted into the queue\n",queue_arr[rear]);
@@ -96,7 +40,6 @@ int isempty(){
         return 1;
     return 0;
 }
-
 int isfull(){
     if(rear==MAX-1)
         return 1;
@@ -109,22 +52,32 @@ int peek(){
     }
     return queue_arr[front];
 }
-void display(){
-    printf("Queue: ");
-    if(isempty()){
-        printf("Empty\n");
-        return;
+void display() {
+    if (isempty())
+        printf("Empty Queue\n");
+    printf("Front = %d   Rear = %d\n", front, rear);
+    for (int i = 0; i <= MAX-1; i++)
+        printf("[%-3d]", i);
+    printf("\n");
+    for (int i = 0; i <= MAX-1; i++)
+        printf(" %-3s ", "___");
+    printf("\n");
+    for (int i = 0; i <= MAX-1; i++) {
+        if (i >= front && i<=rear)
+            printf("| %-3d", queue_arr[i]);
+        else
+            printf("| %-3s", " ");
     }
-    for(int i=front;i<=rear;i++){
-        printf("%d  ",queue_arr[i]);
-    }
+    printf("|\n");
+    for (int i = 0; i <= MAX-1; i++)
+        printf(" %-3s ", "---");
     printf("\n");
 }
+
 int count(){
     if(isempty())
         return 0;
     int count=0;
-
     for(int i=front;front<=rear;front++)
         count++;
     return count;

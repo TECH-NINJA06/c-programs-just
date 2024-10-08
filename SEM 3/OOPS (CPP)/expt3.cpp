@@ -1,30 +1,51 @@
 #include <iostream>
 using namespace std;
 
-class A {
+class temp {
     int x, y;
-
 public:
-    A(int a, int b) {
+    static int c;
+
+    temp() {
+        x = 0;
+        y = 0;
+        c++;
+    }
+
+    temp(int &a, int &b) {
         x = a;
         y = b;
+        c++;
     }
-    A(A &a) {
-        x = a.x;
-        y = a.y;
+
+    temp(temp &t) {
+        x = t.y;
+        y = t.x;
+        c++;
     }
-    ~A() {
-        cout << "Destructor called" << endl;
+
+    ~temp() {
+        cout << "\nDestructor called for object " << c << endl;
+        c--;
     }
+
     void display() {
         cout << "x = " << x << " y = " << y << endl;
     }
 };
-
+int temp::c = 0;
 int main() {
-    A a(10, 20);
-    A b(a);
-    a.display();
-    b.display();
+    int x, y;
+    cout << "Enter two numbers: ";
+    cin >> x >> y;
+
+    temp m(x, y);
+    cout << "\nBefore Swap\n\t";
+    m.display();
+
+    temp n(m);
+    cout << "\nAfter Swap\n\t";
+    n.display();
+
     return 0;
 }
