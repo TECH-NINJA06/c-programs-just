@@ -7,12 +7,22 @@
 using namespace std;
 
 class Student {
-    public:
         string name;
         int marks[5];
         int total;
         float percentage;
         char grade;
+    public:
+        void read() {
+            cout << "Enter name: ";
+            getline(cin,name);
+            cout << "Enter marks in 5 subjects: ";
+            for (int i = 0; i < 5; i++) {
+                cin >> marks[i];
+            }
+            cin.ignore();
+            calculate();
+        }
         void calculate() {
             total = 0;
             for (int i = 0; i < 5; i++) {
@@ -33,25 +43,28 @@ class Student {
                 grade = 'F';
             }
         }
-};
-
-int main() {
-    int n;
-    cout<<"Enter number of students: ";
-    cin>>n;
-    Student students[n];
-    for (int i = 0; i < n; i++) {
-        cout << "Enter name of student " << i + 1 << ": ";
-        cin >> students[i].name;
-        cout << "Enter marks of student " << i + 1 << " in 5 subjects: ";
-        for (int j = 0; j < 5; j++) {
-            cin >> students[i].marks[j];
+        void display() {
+            cout << setw(20) << left << name << setw(10) << right << total << setw(12) << setprecision(2) << fixed << percentage << setw(10) << grade << endl;
         }
-        students[i].calculate();
-    }
-    cout << left << setw(20) << "Name" << setw(10) << "Total" << setw(15) << "Percentage" << setw(10) << "Grade" << endl;
+};
+int main(){
+    int n;
+    cout << "Enter number of students: ";
+    cin >> n;
+    cin.ignore();
+    Student s[n];
     for (int i = 0; i < n; i++) {
-        cout << left << setw(20) << students[i].name << setw(10) << students[i].total << setw(15) << students[i].percentage << setw(10) << students[i].grade << endl;
+        s[i].read();
     }
+    // give column lines to give a table look
+    cout << setfill('-') << setw(52) << "-" << endl;
+    cout << setfill(' ');
+    cout << setw(20) << left << "Name" << setw(10) << right << "Total" << setw(12) << "Percentage" << setw(10) << "Grade" << endl;
+    cout << setfill('-') << setw(52) << "-" << endl;
+    cout << setfill(' ');
+    for (int i = 0; i < n; i++) {
+        s[i].display();
+    }
+    cout << setfill('-') << setw(52) << "-" << endl;
     return 0;
 }
